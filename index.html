@@ -21,7 +21,7 @@
   nav ul{display:flex;gap:28px;list-style:none}
   nav a{color:var(--dim);text-decoration:none;font-size:.9rem;font-family:'JetBrains Mono',monospace;transition:.2s}
   nav a:hover{color:var(--neon)}
-  .btn{display:inline-block;padding:12px 24px;background:transparent;color:var(--neon);text-decoration:none;font-weight:600;font-size:.88rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--neon);border-radius:4px;transition:.3s;cursor:pointer;position:relative;overflow:hidden}
+  .btn{display:inline-block;padding:12px 24px;background:transparent;color:var(--neon);text-decoration:none;font-weight:600;font-size:.88rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--neon);border-radius:4px;transition:.3s;cursor:pointer;position:relative;overflow:hidden;text-align:center;}
   .btn::before{content:'';position:absolute;inset:0;background:var(--neon);transform:translateX(-100%);transition:.3s;z-index:-1}
   .btn:hover{color:var(--bg)}
   .btn:hover::before{transform:translateX(0)}
@@ -104,6 +104,14 @@
   .wa-item{display:flex;align-items:center;gap:10px;padding:10px 14px;text-decoration:none;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.82rem;border-radius:4px;transition:.2s}
   .wa-item:hover{background:rgba(0,255,157,.1);color:var(--neon)}
   .wa-flag{font-size:1.2rem}
+  /* Modal */
+  .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,14,20,0.9);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+  .modal-box{background:var(--bg2);padding:36px;border-radius:8px;width:90%;max-width:500px;color:var(--text);border:1px solid var(--neon);box-shadow:0 0 30px -5px rgba(0,255,157,.3);position:relative;}
+  .modal-box h3{font-size:1.4rem;margin-bottom:20px;color:var(--neon);font-family:'JetBrains Mono',monospace;}
+  .modal-box label{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--cyan);text-transform:uppercase;}
+  .modal-box input, .modal-box textarea{width:100%;padding:12px;margin-bottom:15px;border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .modal-box input:focus, .modal-box textarea:focus{outline:none;border-color:var(--neon);}
+  .modal-close{position:absolute;top:15px;right:20px;font-size:1.5rem;cursor:pointer;color:var(--dim);border:none;background:none;}
   @media(max-width:900px){
     .hero-grid,.grid-nodes,.stats,.foot-grid,.support-grid,.blog-grid{grid-template-columns:1fr}
     .hero h1{font-size:2.2rem}
@@ -202,7 +210,6 @@
   </div>
 </section>
 
-<!-- NUEVA SECCIÓN: CONTACTO Y SOPORTE -->
 <section id="apoyo">
   <div class="container">
     <div class="section-head">
@@ -217,8 +224,8 @@
           <h3>Explorar Soluciones</h3>
           <p>¿No sabes qué nodo necesitas? Habla con nuestro equipo para diseñar tu combinación ideal de trabajadores digitales.</p>
           <div style="display:flex; flex-direction:column; gap:10px;">
-            <a href="https://wa.me/525551000359?text=Hola,%20vengo%20de%20tuempleadoia.store%20y%20quiero%20explorar%20soluciones" class="btn btn-solid">💬 Iniciar Conversación (WhatsApp)</a>
-            <a href="mailto:contacto@tuempleadoia.store?subject=Init%20Connection%20-%20Consulta%20Web&body=Hola%20equipo%20de%20TuEmpleadoIA,%0A%0AEstoy%20interesado%20en%20explorar%20soluciones%20con%20IA.%0A%0AMis%20datos:%0A-%20Nombre:%0A-%20Empresa:%0A-%20Requerimiento:" class="btn" style="text-align:center;">✉️ Enviar Mail a Contacto</a>
+            <a href="https://wa.me/525551000359?text=Hola,%20vengo%20de%20tuempleadoia.store" class="btn btn-solid">💬 Iniciar Conversación (WhatsApp)</a>
+            <button class="btn" onclick="abrirModal('contacto')">✉️ Enviar Mail a Contacto</button>
           </div>
         </div>
       </div>
@@ -228,16 +235,15 @@
           <h3>Soporte Técnico</h3>
           <p>¿Ya eres parte del sistema? Nuestro equipo de soporte está disponible para resolver incidencias y ajustar configuraciones.</p>
           <div style="display:flex; flex-direction:column; gap:10px;">
-            <a href="https://wa.me/51941463997?text=Hola,%20vengo%20de%20tuempleadoia.store%20y%20necesito%20soporte%20t%C3%A9cnico" class="btn">💬 Contactar Soporte (WhatsApp)</a>
-            <a href="mailto:soporte@tuempleadoia.store?subject=System%20Support%20Request&body=Hola%20equipo%20de%20Soporte,%0A%0ANecesito%20ayuda%20con%20mi%20sistema.%0A%0AMis%20datos:%0A-%20Nombre:%0A-%20Empresa:%0A-%20Descripci%C3%B3n%20del%20error:" class="btn btn-solid" style="text-align:center; background:transparent; border-color:var(--dim); color:var(--dim);">✉️ Enviar Mail a Soporte</a>
+            <a href="https://wa.me/51941463997?text=Hola,%20vengo%20de%20tuempleadoia.store%20y%20necesito%20soporte" class="btn">💬 Contactar Soporte (WhatsApp)</a>
+            <button class="btn btn-solid" style="background:transparent; border-color:var(--dim); color:var(--dim);" onclick="abrirModal('soporte')">✉️ Enviar Mail a Soporte</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-  
-<!-- NUEVA SECCIÓN: BLOG -->
+
 <section id="blog">
   <div class="container">
     <div class="section-head">
@@ -284,8 +290,8 @@
       <h2>Inicializa tu equipo hoy</h2>
       <p>Cuéntanos qué necesita tu operación. Te conectamos con los nodos que generan impacto inmediato.</p>
       <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;position:relative;z-index:10;">
-        <a href="https://wa.me/525551000359?text=Hola,%20vengo%20de%20tuempleadoia.store%20(M%C3%A9xico)" class="btn btn-solid">🇲🇽 Deploy México</a>
-        <a href="https://wa.me/51941463997?text=Hola,%20vengo%20de%20tuempleadoia.store%20(Per%C3%BA)" class="btn btn-solid">🇵🇪 Deploy Perú</a>
+        <a href="https://wa.me/525551000359?text=Hola,%20vengo%20de%20tuempleadoia.store" class="btn btn-solid">🇲🇽 Deploy México</a>
+        <a href="https://wa.me/51941463997?text=Hola,%20vengo%20de%20tuempleadoia.store" class="btn btn-solid">🇵🇪 Deploy Perú</a>
       </div>
     </div>
   </div>
@@ -312,19 +318,36 @@
   </div>
 </footer>
 
-<!-- WIDGET WHATSAPP FLOTANTE -->
 <div class="wa-float">
   <div class="wa-menu" id="waMenu">
-    <a href="https://wa.me/525551000359?text=Hola,%20vengo%20de%20tuempleadoia.store" class="wa-item" target="_blank">
-      <span class="wa-flag">🇲🇽</span> México
-    </a>
-    <a href="https://wa.me/51941463997?text=Hola,%20vengo%20de%20tuempleadoia.store" class="wa-item" target="_blank">
-      <span class="wa-flag">🇵🇪</span> Perú
-    </a>
+    <a href="https://wa.me/525551000359?text=Hola,%20vengo%20de%20tuempleadoia.store" class="wa-item" target="_blank"><span class="wa-flag">🇲🇽</span> México</a>
+    <a href="https://wa.me/51941463997?text=Hola,%20vengo%20de%20tuempleadoia.store" class="wa-item" target="_blank"><span class="wa-flag">🇵🇪</span> Perú</a>
   </div>
-  <button class="wa-btn" onclick="document.getElementById('waMenu').classList.toggle('open')" aria-label="Abrir opciones de WhatsApp">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Z"/></svg>
-  </button>
+  <button class="wa-btn" onclick="document.getElementById('waMenu').classList.toggle('open')"><svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Z"/></svg></button>
+</div>
+
+<div id="modal-lead" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarModal()">&times;</button>
+    <h3 id="modal-titulo">Enviar Mensaje</h3>
+    <form id="form-lead" onsubmit="enviarLead(event)">
+      <input type="hidden" id="tipo" value="contacto">
+      <label>Nombre Completo:</label>
+      <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+      <label>Correo Electrónico:</label>
+      <input type="email" id="email" required placeholder="juan@empresa.com">
+      <label>Empresa (Opcional):</label>
+      <input type="text" id="empresa" placeholder="Nombre de tu empresa">
+      <label>Mensaje:</label>
+      <textarea id="mensaje" rows="4" required>Hola, me gustaría recibir más información sobre los empleados de IA para mi negocio.</textarea>
+      <div style="display:flex; gap:10px; margin-top:10px;">
+        <button type="submit" class="btn btn-solid" id="btn-enviar" style="flex:1;">Enviar Mensaje</button>
+      </div>
+    </form>
+    <div id="mensaje-exito" style="display:none; color:var(--neon); font-weight:bold; margin-top:15px; text-align:center;">
+      ✅ ¡Mensaje enviado! Nuestros agentes de IA ya están procesando tu solicitud.
+    </div>
+  </div>
 </div>
 
 <script>
@@ -335,6 +358,57 @@
       menu.classList.remove('open');
     }
   });
+
+  function abrirModal(tipo) {
+    document.getElementById('tipo').value = tipo;
+    document.getElementById('modal-titulo').innerText = tipo === 'contacto' ? 'Contactar a Ventas' : 'Soporte Técnico';
+    document.getElementById('modal-lead').style.display = 'flex';
+  }
+
+  function cerrarModal() {
+    document.getElementById('modal-lead').style.display = 'none';
+    document.getElementById('form-lead').style.display = 'block';
+    document.getElementById('mensaje-exito').style.display = 'none';
+    document.getElementById('btn-enviar').innerText = 'Enviar Mensaje';
+    document.getElementById('btn-enviar').disabled = false;
+  }
+
+  async function enviarLead(event) {
+    event.preventDefault();
+    const btn = document.getElementById('btn-enviar');
+    btn.innerText = "Enviando...";
+    btn.disabled = true;
+
+    const data = {
+      nombre: document.getElementById('nombre').value,
+      email: document.getElementById('email').value,
+      empresa: document.getElementById('empresa').value || "No especificada",
+      mensaje: document.getElementById('mensaje').value,
+      tipo: document.getElementById('tipo').value
+    };
+
+    try {
+      const response = await fetch('https://api-dashboard.camisale.work/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      if (response.ok) {
+        document.getElementById('form-lead').style.display = 'none';
+        document.getElementById('mensaje-exito').style.display = 'block';
+        setTimeout(cerrarModal, 3500);
+      } else {
+        alert("Hubo un error. Por favor intenta por WhatsApp.");
+        btn.innerText = "Enviar Mensaje";
+        btn.disabled = false;
+      }
+    } catch (error) {
+      alert("Error de conexión. Intenta por WhatsApp.");
+      btn.innerText = "Enviar Mensaje";
+      btn.disabled = false;
+    }
+  }
 </script>
 </body>
 </html>
